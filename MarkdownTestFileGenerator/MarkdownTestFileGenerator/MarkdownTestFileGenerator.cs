@@ -80,17 +80,17 @@ namespace MarkdownTestFileGenerator
             loadLorem(File.ReadAllLines("lorem02.txt"));
             loadHeadings(File.ReadAllLines("LoremHeadings.txt"));
 
-            index.Append("{\n");
+            index.Append("{ index:{\n");
 
             for (int i = 0; i < numberOfPosts; i++)
             {
                 makePost(i);
-                index.Append("    {\n");
+                index.Append("    post:{\n");
 
                 index.Append("        title:\"" + "Post" + string.Format("{0:0000000}", i) + "\",\n");
                 index.Append("        subtitle:\"" + string.Format("{0:0000000}", i) + " Was Awesome!\",\n");
                 index.Append("        author:\"Ry Ter\",\n");
-                index.Append("        path:\"" + exportDirectory + "\\posts\",\n");
+                index.Append("        path:\"" + exportDirectory.Replace(@"\", @"\\") + "\\\\posts\",\n");
                 index.Append("        name:\"" + string.Format("{0:0000000}", i) + ".md" + "\",\n");
                 index.Append("        pubdate:\"" + DateTime.Now.AddDays(numberOfPosts - 1).ToShortDateString() + "\",\n");
                 index.Append("        category:\"blog\",\n");
@@ -105,7 +105,7 @@ namespace MarkdownTestFileGenerator
                 }
             }
 
-            index.Append("}");
+            index.Append("}\n}");
 
             File.WriteAllText(exportDirectory + "\\siteIndex.json", index.ToString());
         }
